@@ -8,7 +8,6 @@ const Employees = () => {
   // TODO: Load data from backend service
 
   const [employees, setEmployees] = useState([]); // paneme algse tühja seisu pakiautomaatidele
-  const [employeesCopy, setEmployeesCopy] = useState([]); 
   const [errorMessage, setErrorMessage] = useState('');
   const url = "https://reqres.in/api/users";
 
@@ -22,7 +21,6 @@ const Employees = () => {
       .then(response => response.json())
       .then(json => {
         setEmployees(json.data);
-        setEmployeesCopy(json.data);
       })
   }, [])
 
@@ -54,9 +52,9 @@ const Employees = () => {
       return
     }
 
-    const previousMaximumId = Math.max(...employeesCopy.map(product => product.id));
+    const previousMaximumId = Math.max(...employees.map(product => product.id));
   
-    employeesCopy.push(
+    employees.push(
       {
         "id": previousMaximumId + 1,
         "email": emailRef.current.value,
@@ -65,15 +63,15 @@ const Employees = () => {
         "avatar": avatarRef.current.value,
       }
     )
-    setEmployees(employeesCopy.slice());
+    setEmployees(employees.slice());
   }
 
   const deleteEmployee = (id) => {
     // TODO: Delete an employee from the table
 
-    const index = findIndex(id, employeesCopy);
-    employeesCopy.splice(index, 1);
-    setEmployees(employeesCopy.slice());
+    const index = findIndex(id, employees);
+    employees.splice(index, 1);
+    setEmployees(employees.slice());
 
   }
 
